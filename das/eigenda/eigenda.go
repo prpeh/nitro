@@ -21,6 +21,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/offchainlabs/nitro/arbutil"
 	eigenda_blobs "github.com/offchainlabs/nitro/util/eigenda"
+	flag "github.com/spf13/pflag"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -44,6 +45,16 @@ type EigenDAReader interface {
 type EigenDAConfig struct {
 	Enable bool   `koanf:"enable"`
 	Rpc    string `koanf:"rpc"`
+}
+
+var DefaultEigenDAConfig = EigenDAConfig{
+	Enable: true,
+	Rpc:    "disperser-holesky.eigenda.xyz:443",
+}
+
+func EigenDAConfigAddOptions(prefix string, f *flag.FlagSet) {
+	f.Bool(prefix+".enable", DefaultEigenDAConfig.Enable, "enable EigenDA mode")
+	f.String(prefix+".rpc", DefaultEigenDAConfig.Rpc, "eigenda rpc")
 }
 
 func (ec *EigenDAConfig) String() {
