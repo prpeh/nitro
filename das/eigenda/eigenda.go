@@ -19,6 +19,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/offchainlabs/nitro/arbutil"
+	flag "github.com/spf13/pflag"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -48,6 +49,16 @@ func (ec *EigenDAConfig) String() {
 	fmt.Println(ec.Enable)
 	fmt.Println(ec.Rpc)
 	// fmt.Sprintf("enable: %b, rpc: %s", ec.Enable, ec.Rpc)
+}
+
+var DefaultEigenDAConfig = EigenDAConfig{
+	Enable: true,
+	Rpc:    "disperser-holesky.eigenda.xyz:443",
+}
+
+func EigenDAConfigAddOptions(prefix string, f *flag.FlagSet) {
+	f.Bool(prefix+".enable", DefaultEigenDAConfig.Enable, "enable EigenDA mode")
+	f.String(prefix+".rpc", DefaultEigenDAConfig.Rpc, "eigenda rpc")
 }
 
 type EigenDARef struct {
