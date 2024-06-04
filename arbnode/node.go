@@ -233,7 +233,7 @@ type DangerousConfig struct {
 var DefaultDangerousConfig = DangerousConfig{
 	NoL1Listener:           false,
 	NoSequencerCoordinator: false,
-	DisableBlobReader:      false,
+	DisableBlobReader:      true,
 }
 
 var TestDangerousConfig = DangerousConfig{
